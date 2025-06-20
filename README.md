@@ -1,0 +1,2 @@
+🎬 Full Stack Movie Ticket Booking Website (MERN Stack)
+This is a fully functional Movie Ticket Booking Website built using the MERN Stack (MongoDB, Express.js, React.js, Node.js). It allows users to browse movies, view details, book tickets, and manage bookings with a clean, responsive UI and secure backend.
