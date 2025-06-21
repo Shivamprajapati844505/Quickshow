@@ -193,7 +193,28 @@ export const dummyShowsData = [
         "vote_average": 7.443,
         "vote_count": 23569,
         "runtime": 127,
-    }
+    },
+    {
+  "_id": "671240",
+  "id": 671240,
+  "title": "Echoes of Eternity",
+  "overview": "A gifted hacker uncovers a hidden simulation that controls humanity, triggering a chain of events that forces her to question reality itself.",
+  "poster_path": "https://image.tmdb.org/t/p/original/8uVKfOJUhmybNsVh089EqLHUYEG.jpg",
+  "backdrop_path": "https://image.tmdb.org/t/p/original/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+  "genres": [
+    { "id": 9648, "name": "Mystery" },
+    { "id": 878, "name": "Thriller" },
+    { "id": 53, "name": "Thriller" }
+  ],
+  "casts": dummyCastsData,
+  "release_date": "2025-09-22",
+  "original_language": "en",
+  "tagline": "The truth is encrypted.",
+  "vote_average": 7.4,
+  "vote_count": 15800,
+  "runtime": 126
+}
+
 ]
 
 export const dummyDateTimeData = {
