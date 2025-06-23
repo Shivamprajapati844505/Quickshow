@@ -4,11 +4,10 @@ import { dummyShowsData } from "./../../assets/assets";
 import { useEffect } from "react";
 import Loading from "./../../components/Loading";
 import Title from "./../../components/admin/Title";
-import { dateFormate } from './../../lib/dateFormat';
+import { dateFormate } from "./../../lib/dateFormat";
 
 const ListShows = () => {
-
-    const currency = import.meta.env.VITE_CURRENCY;
+  const currency = import.meta.env.VITE_CURRENCY;
 
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,16 +49,25 @@ const ListShows = () => {
               <th className="p-2 font-medium">Earnings</th>
             </tr>
           </thead>
-          <tbody className='text-sm font-light'>
-            {shows.map((show, index)=>(
-
-      <tr key={index} className='border-b border-primary/10 bg-primary/5 even:bg-primary/10'>
-    <td className='p-2 min-w-45 pl-5'>{show.movie.title}</td>
-    <td className='p-2'>{dateFormate(show.showDateTime)}</td>
-    <td className='p-2'>{object.keys(show.occupiedSeats).length}</td>
-    <td className='p-2'>{currency} {objecct.keys(show.occupiedSeats)length * show.showPrice}</td>
-  </tr>
-   ))}
+          <tbody className="text-sm font-light">
+            {shows.map((show, index) => (
+              <tr
+                key={index}
+                className="border-b border-primary/10 bg-primary/5 even:bg-primary/10"
+              >
+                <td className="p-2 min-w-45 pl-5">{show.movie.title}</td>
+                <td className="p-2">{dateFormate(show.showDateTime)}</td>
+                <td className="p-2">
+                  {Object.keys(show.occupiedSeats).length}
+                </td>
+                <td className="p-2">
+                  {currency}{" "}
+                  {(
+                    Object.keys(show.occupiedSeats).length * show.showPrice
+                  ).toLocaleString()}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
