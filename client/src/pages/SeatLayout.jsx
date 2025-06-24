@@ -51,11 +51,10 @@ const SeatLayout = () => {
     return (
       <div
         key={row}
-        className="flex flex-wrap items-center justify-center gap-2 mt-2"
-      >
-        {Array.from({ length: count }, (_, i) => {
+        className="flex flex-wrap items-center justify-center gap-2 mt-2">
+        {Array.from({ length: count }, (_,i) => {
           const seatId = `${row}${i + 1}`;
-          return (
+          return(
             <button
               key={seatId}
               onClick={() => handleSeatClick(seatId)}
@@ -90,7 +89,7 @@ const SeatLayout = () => {
                   : "hover:bg-primary/20"
               }`}
             >
-              <ClockIcon className="w-4 h-4" />{" "}
+              <ClockIcon className="w-4 h-4" />
               <p className="text-sm">{isoTimeFormate(item.time)}</p>
             </div>
           ))}
@@ -122,7 +121,7 @@ const SeatLayout = () => {
               return toast("Please select time first");
             }
             if (selectedSeats.length === 0) {
-              return toast("Please select at least 1 seat");
+              return toast("Please select a seat");
             }
             navigate("/my-bookings");
           }}

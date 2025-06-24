@@ -10,7 +10,7 @@ const Movies = () => {
       <BlureCircle bottom='150px' right='100px'/>
    <h1 className='text-lg font-medium my-4'>Now Showing</h1>
    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6'>
-    {dummyShowsData.map((movie)=>(
+    {dummyShowsData.slice(0,8).map((movie)=>(
       <MovieCard movie={movie} key ={movie._id}/>
     ))}
    </div>

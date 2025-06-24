@@ -16,20 +16,13 @@ const FeaturedSection = () => {
         <button
           onClick={() => navigate("/movies")}
           className="group flex items-center gap-2 text-sm text-gray-300 cursor-pointer"
-        >
-          View All
+        > View All
           <ArrowRight className="group-hover:translate-x-0.5 transition w-4.5 h-4.5" />
         </button>
       </div>
 
-      {/* <div className='flex felx-wrap max-sm:justify-center gap-8 mt-8'>
-        {dummyShowsData.slice(0,4).map((show)=>(
-            <MovieCard key={show._id} movie={show}/>
-        ))}
-      </div> */}
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
-        {dummyShowsData.map((movie) => (
+        {dummyShowsData.slice(0,8).map((movie) => (
           <MovieCard key={movie._id} movie={movie} />
         ))}
       </div>

@@ -12,7 +12,7 @@ const DateSelcet = ({ dateTime, id }) => {
     if (!selected) {
       toast("Please select a date");
       return;
-    }
+      }
     navigate(`/movies/${id}/${selected}`);
     scrollTo(0, 0);
   };

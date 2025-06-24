@@ -9,6 +9,7 @@ import { PlayCircleIcon } from 'lucide-react';
 import DateSelcet from './../components/DateSelcet';
 import MovieCard from './../components/MovieCard';
 import Loading from './../components/Loading';
+import { fullDate } from './../lib/dateFormat';
 
 const MovieDetails = () => {
 
@@ -49,7 +50,7 @@ const MovieDetails = () => {
         </div>
         <p className='text-gray-400 mt-2 text-sm leading-tight max-w-xl'>{show.movie.overview}</p>
 
-        <p> {timeFormat(show.movie.runtime)} . {show.movie.genres.map(genre=>genre.name).join(" ,")} . {show.movie.release_date.split("-")[0]} </p>
+        <p> {timeFormat(show.movie.runtime)} . {show.movie.genres.map(genre=>genre.name).join(" | ")} . {fullDate(show.movie.release_date.split("-"))} </p>
 
 
         <div className=" flex items-center flex-wrap gap-4 mt-4"> 
