@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import connectDB from './configs/db.js';
 import { clerkMiddleware } from '@clerk/express';
 import { serve } from "inngest/express";
@@ -9,7 +9,7 @@ import showRouter from './routes/showRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import userRouter from './routes/userRoutes.js';
-
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
