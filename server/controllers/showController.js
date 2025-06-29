@@ -92,7 +92,7 @@ export const getNowPlayingMovies = async (req,res) =>{
         //filter unique shows
         const uniqueShows = new Set(shows.map(show => show.movie))
         res.json({success:true, shows: Array.from(uniqueShows)}) 
-        console.log("Fetched shows:", shows);
+        // console.log("Fetched shows:", shows);
 
     } catch (error) {
         console.error(error);

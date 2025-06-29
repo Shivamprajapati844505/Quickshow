@@ -5,7 +5,7 @@ import Show from './../models/Show.js';
 
 
 // API to chrk is user is admin
-export const isAdmin = async (req,res)=>{
+export const isAdmin = async(req,res)=>{
     res.json({success:true, isAdmin:true})
 
 }
