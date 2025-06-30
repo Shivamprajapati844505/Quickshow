@@ -19,7 +19,6 @@ const AddShows = () => {
   const [dateTimeSelection, setDateTimeSelection] = useState({});
   const [dateTimeInput, setDateTimeInput] = useState("");
   const [showPrice, setShowPrice] = useState("");
-  const [showsInput, setShowsInput] = useState("");
   const [addingShow, setAddingShow] = useState(false);
 
   const fetchNowPlayingMovies = async () => {
@@ -76,7 +75,7 @@ const AddShows = () => {
       ) {
         return toast("Missing required fields");
       }
-      const showInput = Object.entries(dateTimeSelection).map(
+      const showsInput = Object.entries(dateTimeSelection).map(
         ([date, time]) => ({ date, time })
       );
 

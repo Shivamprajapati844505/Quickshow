@@ -5,8 +5,17 @@ import Show from "./../models/Show.js";
 //Playing movies from TMDB API
 export const getNowPlayingMovies = async (req, res) => {
   try {
+    // const { data } = await axios.get(
+    //   `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_API_KEY}`
+    // );
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_API_KEY}`
+      "https://api.themoviedb.org/3/movie/now_playing",
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+        },
+      }
     );
 
     const movies = data.results;
@@ -21,17 +30,32 @@ export const getNowPlayingMovies = async (req, res) => {
 //API to add a new show to the database
 export const addShow = async (req, res) => {
   try {
-    const { movieId, showsInput, showsPrice } = req.body;
+    const { movieId, showsInput, showPrice } = req.body;
 
     let movie = await Movie.findById(movieId);
 
     if (!movie) {
       // Use api_key in query string (v3 format)
-      const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
-        axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`),
-        
-        axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.TMDB_API_KEY}`),
-      ]);
+      // const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
+      //   axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`),
+
+      //   axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.TMDB_API_KEY}`),
+      // ]);
+const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
+  axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.TMDB_API_KEY_1}`,
+      accept: 'application/json',
+    },
+  }),
+
+  axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
+    headers: {
+      Authorization: `Bearer ${process.env.TMDB_API_KEY_1}`,
+      accept: 'application/json',
+    },
+  }),
+]);
 
       const movieApiData = movieDetailsResponse.data;
       const movieCreditsData = movieCreditsResponse.data;
@@ -62,7 +86,7 @@ export const addShow = async (req, res) => {
         showsToCreate.push({
           movie: movieId,
           showDateTime: new Date(dateTimeString),
-          showPrice: showsPrice,
+          showPrice,
           occupiedSeats: {},
         });
       });
@@ -78,6 +102,7 @@ export const addShow = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
 
 
 //API to get all shows from database
@@ -97,8 +122,9 @@ export const getShows = async (req, res) => {
   }
 };
 
-//API to geta sigle shows from database
 
+
+//API to geta sigle shows from database
 export const getShow = async (req, res) => {
   try {
     const { movieId } = req.params;
