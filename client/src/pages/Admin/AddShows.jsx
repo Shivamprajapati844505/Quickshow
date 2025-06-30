@@ -12,7 +12,7 @@ import { useAppContext } from './../../context/AppContext';
 const AddShows = () => {
 
 
-  const {axios, getToken, user} = useAppContext()
+  const {axios, getToken, user, image_base_url} = useAppContext()
 
 
   const currency = import.meta.env.VITE_CURRENCY;
@@ -40,9 +40,6 @@ const AddShows = () => {
       
   };
 
-  useEffect(() => {
-    fetchNowPlayingMovies();
-  }, []);
 
   const handleDateTimeAdd = () => {
     if (!dateTimeInput) return;
@@ -72,6 +69,13 @@ const AddShows = () => {
     });
   };
 
+  useEffect(() => {
+    if(user){
+       fetchNowPlayingMovies();
+    }
+    
+  }, [user]);
+
   return nowPlayingMovies.length > 0 ? (
     <>
       <Title text1="Add" text2="Shows" />
@@ -87,7 +91,7 @@ const AddShows = () => {
               >
                 <div>
                   <img
-                    src={movie.poster_path}
+                    src={ image_base_url + movie.poster_path}
                     alt="movie_poster"
                     className="w-full object-cover brightness-90"
                   />
