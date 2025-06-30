@@ -69,8 +69,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if(user)
-    fetchDashboardData();
+    if(user){
+      fetchDashboardData();
+    }
+    
   }, [user]);
 
   return !loading ? (

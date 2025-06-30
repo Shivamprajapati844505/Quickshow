@@ -27,8 +27,7 @@ const AddShows = () => {
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${await getToken()}`,
-        },
-      });
+        }});
       if (data.success) {
         setNowPlayingMovies(data.movies);
       }
