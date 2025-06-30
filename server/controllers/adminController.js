@@ -4,7 +4,7 @@ import Show from './../models/Show.js';
 
 
 
-// API to chrk is user is admin
+// API to check is user is admin
 export const isAdmin = async(req,res)=>{
     res.json({success:true, isAdmin:true})
 
@@ -18,7 +18,7 @@ export const isAdmin = async(req,res)=>{
          const totalUser = await User.countDocuments();
          const dashboardData = {
             totalBookings: bookings.length,
-            totalRevenue: booking.reduce((acc, booking)=> acc + booking.amount, 0),
+            totalRevenue: bookings.reduce((acc, booking)=> acc + booking.amount, 0),
             activeShows,
             totalUser
          }
