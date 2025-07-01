@@ -7,7 +7,7 @@ import Booking from './../models/Booking.js';
 const checkSeatsAvailability = async(showId ,selectedSeats) => {
     try {
         
-       const shoeData =  await Show.findById(showId)
+    //    const showData =  await Show.findById(showId)
        if(!showData) return false ;
 
        const occupiedSeats = showData.occupiedSeats;
