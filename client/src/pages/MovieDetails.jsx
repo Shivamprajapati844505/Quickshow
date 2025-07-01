@@ -32,23 +32,28 @@ const MovieDetails = () => {
     }
   };
 
-  const handleFavorite = async () =>{
-    try {
-          if(!user) return toast.error("Please login to proceed");
+  const handleFavorite = async () => {
+  try {
+    if (!user) return toast.error("Please login to proceed");
 
-          const {data} = await axios.post('/api/user/update-favorite',{movieId: id},
-            {headers: {Authorization: `Bearer ${await getToken()}`}})
+    console.log("Movie ID:", id);
 
-            if(data.success) {
-              await fetchFavoriteMovies()
-              toast.success(data.message)
-            }
-    } catch (error) {
-      console.log(error);
-      
-      
+    const { data } = await axios.post(
+      '/api/user/update-favorite',
+      { movieId: show.movie._id },
+      { headers: { Authorization: `Bearer ${await getToken()}` } }
+    );
+
+    console.log("Update Response:", data);
+
+    if (data.success) {
+      await fetchFavoriteMovies(); 
+      toast.success(data.message);
     }
+  } catch (error) {
+    console.log("Favorite Error:", error);
   }
+};
 
   useEffect(() => {
     getShow();
@@ -83,8 +88,9 @@ const MovieDetails = () => {
             </button>
           <a href="#dateSelect" className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95'>Buy Tickets</a>
           <button onClick={handleFavorite} className='bg-gray-700 p-2.5 rounded-full transition cursor-pointer active:scale-95'>
-            <Heart className={`w-5 h-5 ${favoriteMovies.find(movie => movie._id === id) ?'fill-primary text-primary': "" }`}/>
-          </button>
+              <Heart className={`w-5 h-5 ${favoriteMovies.find(movie => movie._id === id) ? 'fill-primary text-primary' : ''}`} />
+           </button>
+
             </div>
         </div>
       </div>

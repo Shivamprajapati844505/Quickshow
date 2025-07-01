@@ -50,21 +50,24 @@ const fetchShows = async() =>{
     }
 }
 
-  const fetchFavoriteMovies = async()=>{
-    try {
-     const {data} =  await axios.get("/api/user/favorites", {
-        headers: { Authorization: `Bearer ${await getToken()}`}})
+  const fetchFavoriteMovies = async () => {
+  try {
+    const { data } = await axios.get("/api/user/favorites", {
+      headers: { Authorization: `Bearer ${await getToken()}` }
+    });
 
-      if(data.success){
-        setFavoriteMovies(data.movies)
-      }else{
-        toast.error(data.message)
-      }
-    } catch (error) {
-        console.error(error);
-        
+    console.log("Fetched Favorites:", data);
+
+    if (data.success) {
+      setFavoriteMovies(data.movies); // ✅ should update UI
+    } else {
+      toast.error(data.message);
     }
+  } catch (error) {
+    console.log("Fetch Favorite Movies Error:", error);
   }
+};
+
   useEffect(()=>{
     fetchShows()
   },[])  
@@ -74,6 +77,7 @@ const fetchShows = async() =>{
     if (user) {
       fetchIsAdmin()
       fetchFavoriteMovies()
+      
     }
   }, [user]);
 

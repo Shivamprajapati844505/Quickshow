@@ -23,7 +23,7 @@ export const getUserBookings = async (req,res)=>{
 export const updateFavorite = async (req,res)=>{
     try {
         const {movieId} = req.body;
-        const userId = res.auth().userId;
+        const userId = req.auth().userId;
 
         const user = await clerkClient.users.getUser(userId)
 
@@ -42,7 +42,7 @@ export const updateFavorite = async (req,res)=>{
    
     } catch (error) {
          console.error(error.messsage);
-        res.json({sucess:false,message:error.message});  
+        res.json({success:false,message:error.message});  
     }
 }
 
