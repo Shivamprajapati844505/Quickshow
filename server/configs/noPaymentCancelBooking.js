@@ -3,7 +3,7 @@ import Show from "../models/Show.js";
 
 
 export const scheduleCancelBooking = (bookingId, delayInMs = 10 * 60 * 1000) => {
-  setTimeout(async () => {
+  setTimeout( async () => {
     try {
       const booking = await Booking.findById(bookingId);
       if (booking && !booking.isPaid) {
