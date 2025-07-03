@@ -2,6 +2,7 @@
 import Show from "../models/Show.js"
 import Booking from './../models/Booking.js';
 import Stripe from 'stripe';
+import { inngest } from './../inngest/index.js';
 
 
 //Function to check availability of selected seats for movie
@@ -41,12 +42,13 @@ export const createBooking = async(req,res) =>{
         const showData = await Show.findById(showId).populate('movie');
 
         //create a new booking
-        const booking = await Booking.create({
-            user: userId,
-            show: showId,
-            amount: showData.showPrice * selectedSeats.length,
-            bookedSeats:selectedSeats
-       })
+       const booking = await Booking.create({
+           user: userId,
+           show: showId,
+           amount: showData.showPrice * selectedSeats.length,
+           bookedSeats: selectedSeats 
+          })
+
 
        selectedSeats.map((seat)=>{
            showData.occupiedSeats[seat] = userId;
@@ -77,6 +79,7 @@ export const createBooking = async(req,res) =>{
         cancel_url: `${origin}/my-bookings`,
         line_items: line_items,
         mode:'payment',
+        locale: 'auto',
         metadata:{
             bookingId: booking._id.toString()
         },
@@ -84,6 +87,16 @@ export const createBooking = async(req,res) =>{
        })
        booking.paymentLink = session.url
        await booking.save()
+
+       // run Inngets Sheduler Function to chek payment status after 10 minutes 
+       await inngest.send({
+        name:"app/checkpayment",
+        data:{
+            bookingId: booking._id.toString()
+        }
+       })
+
+
 
        res.json({success: true , url: session.url})
 
@@ -99,7 +112,7 @@ export const getOccupiedSeats = async (req,res) =>{
     try {
 
         const {showId} = req.params;
-        const showData = await Show .findById(showId)
+        const showData = await Show.findById(showId)
         const occupiedSeats = Object.keys(showData.occupiedSeats)
         res.json({success:true, occupiedSeats})
           
