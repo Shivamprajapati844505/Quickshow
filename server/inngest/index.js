@@ -3,7 +3,7 @@ import User from './../models/User.js';
 import Booking from './../models/Booking.js';
 import Show from './../models/Show.js';
 
-export const inngest = new Inngest({ id: "movie-ticket-booking" });
+export const inngest = new Inngest({ id: "movie-ticket-booking"});
 
 // Inngest function to save user data to a datebase
 const syncUserCreation = inngest.createFunction(
@@ -58,6 +58,7 @@ const syncUserUpdation = inngest.createFunction(
 const releaseSeatsAndDeleteBooking = inngest.createFunction(
   {id:'release-seats-delete-booking'},
   {event:"app/checkpayment"},
+
   async({event, step})=>{
     const tenMinutesLater = new Date(Date.now() + 10 * 60 *1000);
   await step.sleepUntil('wait-for-10-minutes',tenMinutesLater);
@@ -70,7 +71,7 @@ const releaseSeatsAndDeleteBooking = inngest.createFunction(
     if(!booking.isPaid){
       const show = await Show.findById(booking.show);
       booking.bookedSeats.forEach((seat)=>{
-        delete show.occupiedSeats[seats]
+        delete show.occupiedSeats[seat]
       })
       show.markModified('occupiedSeats')
       await show.save()
