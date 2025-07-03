@@ -3,7 +3,10 @@ import User from './../models/User.js';
 import Booking from './../models/Booking.js';
 import Show from './../models/Show.js';
 
-export const inngest = new Inngest({ id: "movie-ticket-booking"});
+export const inngest = new Inngest({
+  id: "movie-ticket-booking", 
+  eventKey: process.env.INNGEST_EVENT_KEY, 
+});
 
 // Inngest function to save user data to a datebase
 const syncUserCreation = inngest.createFunction(
@@ -56,12 +59,13 @@ const syncUserUpdation = inngest.createFunction(
 //inngest Function to cancle booking and release seats of show after 10 minuts of booking created if payment is not made
 
 const releaseSeatsAndDeleteBooking = inngest.createFunction(
-  {id:'release-seats-delete-booking'},
+  {id:'release-booking-after-timeout'},
   {event:"app/checkpayment"},
 
-  async({event, step})=>{
-    const tenMinutesLater = new Date(Date.now() + 10 * 60 *1000);
-  await step.sleepUntil('wait-for-10-minutes',tenMinutesLater);
+  async ({event, step}) => {
+  const tenMinutesLater = new Date(Date.now() + 10 * 60 * 1000);
+
+  await step.sleepUntil('wait-for-10-minutes', tenMinutesLater);
   
   await step.run('check-payment-status', async()=>{
     const bookingId = event.data.bookingId;
