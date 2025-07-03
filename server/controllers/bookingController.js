@@ -55,7 +55,6 @@ export const createBooking = async(req,res) =>{
        })
 
        showData.markModified('occupiedSeats');
-
        await showData.save();
        
        //Stripe Gateway Initialize
@@ -88,25 +87,32 @@ export const createBooking = async(req,res) =>{
        booking.paymentLink = session.url
        await booking.save()
 
-       // run Inngets Sheduler Function to chek payment status after 10 minutes 
-       await inngest.send({
-        name:"app/checkpayment",
-        data:{
-            bookingId: booking._id.toString()
+    setTimeout(async () => {
+      try {
+        const existingBooking = await Booking.findById(booking._id);
+        if (existingBooking && !existingBooking.isPaid) {
+          const show = await Show.findById(existingBooking.show);
+          existingBooking.bookedSeats.forEach((seat) => {
+            delete show.occupiedSeats[seat];
+          });
+          show.markModified("occupiedSeats");
+          await show.save();
+          await Booking.findByIdAndDelete(existingBooking._id);
         }
-       })
+      } catch (e) {
+        console.error("Error checking payment after 10 minutes:", e.message);
+      }
+    }, 10 * 60 * 1000); // after 10 min to release seat 
+
+    res.json({ success: true, url: session.url });
+
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
 
 
-
-       res.json({success: true , url: session.url})
-
-    } catch (error) {
-        console.log(error.message);
-        res.json({success:false, message:error.message})
-        
-    }
-    
-}
 
 export const getOccupiedSeats = async (req,res) =>{
     try {
