@@ -5,9 +5,6 @@ import Show from "./../models/Show.js";
 //Playing movies from TMDB API
 export const getNowPlayingMovies = async (req, res) => {
   try {
-    // const { data } = await axios.get(
-    //   `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_API_KEY}`
-    // );
     const { data } = await axios.get(
       "https://api.themoviedb.org/3/movie/now_playing",
       {
@@ -35,12 +32,6 @@ export const addShow = async (req, res) => {
     let movie = await Movie.findById(movieId);
 
     if (!movie) {
-      // Use api_key in query string (v3 format)
-      // const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
-      //   axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`),
-
-      //   axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.TMDB_API_KEY}`),
-      // ]);
 const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
   axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
     headers: {
