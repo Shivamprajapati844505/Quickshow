@@ -3,6 +3,8 @@ import Show from "../models/Show.js"
 import Booking from './../models/Booking.js';
 import Stripe from 'stripe';
 import { inngest } from './../inngest/index.js';
+import { scheduleCancelBooking } from './../configs/noPaymentCancelBooking.js';
+import { emailBookingConfirmation } from './../configs/emailBookingConfirmation.js';
 
 
 //Function to check availability of selected seats for movie
@@ -87,22 +89,9 @@ export const createBooking = async(req,res) =>{
        booking.paymentLink = session.url
        await booking.save()
 
-    setTimeout(async () => {
-      try {
-        const existingBooking = await Booking.findById(booking._id);
-        if (existingBooking && !existingBooking.isPaid) {
-          const show = await Show.findById(existingBooking.show);
-          existingBooking.bookedSeats.forEach((seat) => {
-            delete show.occupiedSeats[seat];
-          });
-          show.markModified("occupiedSeats");
-          await show.save();
-          await Booking.findByIdAndDelete(existingBooking._id);
-        }
-      } catch (e) {
-        console.error("Error checking payment after 10 minutes:", e.message);
-      }
-    }, 10 * 60 * 1000); // after 10 min to release seat 
+
+       scheduleCancelBooking(booking._id);
+       emailBookingConfirmation(booking._id);
 
     res.json({ success: true, url: session.url });
 
