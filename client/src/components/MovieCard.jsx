@@ -9,7 +9,7 @@ const MovieCard = ({ movie }) => {
   const {image_base_url} = useAppContext()
 
   return (
-    <div className="flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300 w-full max-w-xs sm:max-w-sm md:max-w-[400px] mx-auto h-full">
+    <div className="flex flex-col justify-between lg:p-3 p-2 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300 w-full max-w-xs sm:max-w-sm md:max-w-[400px] mx-auto h-full gap-1">
       <img
         onClick={() => {
           navigate(`/movies/${movie._id}`);
@@ -17,7 +17,7 @@ const MovieCard = ({ movie }) => {
         }}
         src={image_base_url + movie.backdrop_path}
         alt="Movie image"
-        className="rounded-lg h-48 sm:h-56 md:h-64 w-full object-cover object-center cursor-pointer"
+        className="rounded-lg h-38 sm:h-46 md:h-64 w-full object-cover object-center cursor-pointer"
       />
 
       <p className="font-semibold mt-2 text-sm sm:text-base truncate">
@@ -34,15 +34,16 @@ const MovieCard = ({ movie }) => {
       </p>
 
       <div className="flex items-center justify-between mt-3">
-        <button
-          onClick={() => {
-            navigate(`/movies/${movie._id}`);
-            scrollTo(0, 0);
-          }}
-          className="px-3 py-1 text-xs bg-primary hover:bg-primary-dull transition rounded-full font-medium"
-        >
-          Buy Tickets
-        </button>
+     <button
+  onClick={() => {
+    navigate(`/movies/${movie._id}`);
+    scrollTo(0, 0);
+  }}
+  className="px-2 py-1 text-[8px] bg-primary hover:bg-primary-dull transition rounded-full font-medium sm:px-3 sm:text-sm"
+>
+  Buy Tickets
+</button>
+
 
         <p className="flex items-center gap-1 text-xs text-gray-400">
           <StarIcon className="w-4 h-4 text-primary fill-primary" />

@@ -111,7 +111,7 @@ const MovieDetails = () => {
       <DateSelcet dateTime={show.dateTime} id={id}/>
 
       <p className ='text-lg font-medium mt-20 mb-8'>You May Also Like</p>
-      <div className='flex flex-warp max-sm:justify-center gap-8'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-6'>
         {shows.slice(0,4).map((movie,index)=>(
           <MovieCard key={index} movie={movie}/>
         ))} 
