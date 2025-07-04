@@ -13,9 +13,8 @@ const UpcomingMovies = () => {
   useEffect(() => {
     const getUpcomingMovies = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/api/movies/upcoming"
-        );
+       const res = await axios.get("/api/movies/upcoming");
+
         setMovies(res.data.movies);
       } catch (error) {
         console.error("Error fetching upcoming movies:", error);
